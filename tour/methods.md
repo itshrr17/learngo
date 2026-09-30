@@ -20,8 +20,8 @@ func (v Vertex) Neg() Vertex {
 
 usage 
 v := Vertex{1.3, 3.5}
-v.Abs()
-v.Neg()
+v = v.Abs()
+v = v.Neg()
 
 Explanation
 In  func (v Vertex)
@@ -57,3 +57,24 @@ xyc := localFloat(3.14)
 fmt.Println(xyc.Double())
 
 But cannot be declared on local types like, func (f float64); Wrong;
+
+Pointer receiver or Pointers and functions
+
+func (v* Vertex) Neg() float64 {
+  v.X = v.X * -1
+  v.Y = v.Y * -1
+}
+
+v.Abs() // changes that pointer, because it gets pointer not the value
+
+or
+
+func Abs(v* Vertex) float64 {
+  v.X = v.X * -1
+  v.Y = v.Y * -1
+}
+
+Abs(&v)
+
+When to choose pointer receiver, when we want to modify the value 
+or avoid copying the value, can be efficient when dealing with large structs
